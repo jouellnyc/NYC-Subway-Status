@@ -22,10 +22,10 @@
 |----------|----------|-------------|------------|
 | **GPIO44** | UART TX | PPP transmit data | → RS-422 TX Input |
 | **GPIO43** | UART RX | PPP receive data | ← RS-422 RX Output |
-| **GPIO0** | Button Input | Line switch control | Pull-up with momentary button |
-| **GPIO2** | LED Output | Status indicator | RGB LED (Green/Yellow/Red) |
 | **GND** | Ground | Common reference | → RS-422 & Pi Zero GND |
 | **3.3V** | Power Supply | Logic level power | → RS-422 VCC |
+| **GPIO0** | Button Input | Line switch control | Momentary button press |
+
 
 ## Pi Zero  GPIO Configuration
 
