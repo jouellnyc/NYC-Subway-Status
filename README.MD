@@ -23,6 +23,60 @@
 - A ppp over serial connection to a pizero allow them to.
 - Let's make an NYC Subway Desk Monitor.
 
+## Serial Communication Chain
+
+```
+ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
+     │                 │                  │
+   9600 baud      Differential         9600 baud
+  (GPIO44/43)     Signal (A+/A-)      (GPIO14/15)
+     PPP            Up to 1200m        PPP Server
+   Protocol        Industrial Grade    & Router
+```
+
+# Serial Connections & GPIO Pin Summary
+
+## ESP32 T-Display-S3 GPIO Configuration
+
+| GPIO Pin | Function | Description | Connection |
+|----------|----------|-------------|------------|
+| **GPIO44** | UART TX | PPP transmit data | → RS-422 TX Input |
+| **GPIO43** | UART RX | PPP receive data | ← RS-422 RX Output |
+| **GND** | Ground | Common reference | → RS-422 & Pi Zero GND |
+| **3.3V** | Power Supply | Logic level power | → RS-422 VCC |
+| **GPIO0** | Button Input | Line switch control | Momentary button press |
+
+
+## Pi Zero  GPIO Configuration
+
+| GPIO Pin | Function | Description | Connection |
+|----------|----------|-------------|------------|
+| **GPIO14 (TXD)** | UART TX | PPP transmit data | ← RS-422 B+ Terminal |
+| **GPIO15 (RXD)** | UART RX | PPP receive data | ← RS-422 B- Terminal |
+| **Pin 1 (3.3V)** | Power Supply | Logic level power | → RS-422 VCC |
+| **Pin 6 (GND)** | Ground | Common reference | → RS-422 & ESP32 GND |
+
+
+## Communication Protocol Stack
+
+| Layer | ESP32 | RS-422 | Pi Zero |
+|-------|-------|---------|---------|
+| **Application** | Transit Monitor | - | Flask API Server |
+| **Network** | PPP Client | - | PPP Server + Router |
+| **Data Link** | UART Protocol | Differential Signaling | UART Protocol |
+| **Physical** | GPIO44/43 | A+/A- ↔ B+/B- | GPIO14/15 |
+
+## Key Technical Specifications
+
+- **Baud Rate**: 9600 bps (configurable)
+- **Protocol**: PPP over UART
+- **Max Distance**: 1200m (4000ft) via RS-422
+- **Power**: 3.3V logic levels
+- **Noise Immunity**: Differential signaling
+- **Auto-Recovery**: PPP reconnect on failure
+
+This creates a robust, industrial-grade serial communication link that bypasses WiFi complexity while providing reliable long-distance connectivity.
+
 ## 📸 Basic Operation 
 
 The system cycles through configured transit lines (F and R trains by default), displaying:
