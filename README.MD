@@ -43,7 +43,7 @@ The system cycles through configured transit lines (F and R trains by default), 
 - **UART** acts as modem (uses PPP support)
 - **Push Button** for line switching
 
-### Pin Configuration
+### Pin Configuration for T-Display-S3
 ```python
 PINS = {
     'led': 2,           # Status LED
