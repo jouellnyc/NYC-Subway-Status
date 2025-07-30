@@ -82,7 +82,7 @@ ampy -p /dev/ttyUSB0 put smain.py
 Edit `config.py` to match your setup:
 
 ```python
-# Transit API endpoint (Here's we use a Pi Zero)
+# Transit API endpoint (Here we use a Pi Zero)
 SERVICE_URL = "http://your-transit-api:5000"
 
 # Hardware pins
