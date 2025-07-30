@@ -24,11 +24,8 @@
 
 ```
 ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
-     │                 │                  │
-   9600 baud      Differential         9600 baud
-  (GPIO44/43)     Signal (A+/A-)      (GPIO14/15)
-     PPP            Up to 1200m        PPP Server
-   Protocol        Industrial Grade    & Router
+     │                                                  │
+   PPP Client            Up to 1200m             PPP Server & Router 
 ```
 
 # Serial Connections & GPIO Pin Summary
