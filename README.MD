@@ -1,6 +1,6 @@
 # 🚇 MicroPython NYC Subway Desk Monitor
 
-> A modular, memory-optimized semi-real-time NYC Subway monitor.
+> A modular, memory-optimized semi-real-time smooth scrolling NYC Subway monitor.
 
 [![Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![Language](https://img.shields.io/badge/Language-MicroPython-green.svg)](https://micropython.org/)
