@@ -117,17 +117,23 @@ PPP_CONFIG = {
 
 ## 🚀 Quick Start
 
-### Step 1: Flash MicroPython
+### Step 1a: Install Flask and Start up the App  on Pizero 
+```
+pip install Flask
+python flask_nyc_mta.py
+
+
+### Step 1b: Configure ppp on Pizero
+then 
+See https://github.com/jouellnyc/wpa-ent-mschapv2-bridge
+See https://github.com/jouellnyc/UART/tree/main/esp32_pizero_ppp
+```
+
+### Step 1: Flash MicroPython on the ESP32/T-Display
 Flash MicroPython firmware to your ESP32 device.
 https://github.com/russhughes/st7789s3_mpy/blob/main/firmware/firmware.bin
 
-### Step 2: Install Libraries
-```bash
-# Install s3lcd for TFT display support
-# (Use Russ's FW above)
-```
-
-### Step 3: Upload Code
+### Step 3: Upload Code 
 Upload all Python files to your ESP32:
 
 ```bash
@@ -142,7 +148,7 @@ ampy -p /dev/ttyUSB0 put smain.py
 ampy -p /dev/ttyUSB0 put main.py
 ```
 
-### Step 4: Configure
+### Step 4: Configure on the ESP32/T-Display
 Edit `config.py` to match your setup:
 
 ```python
