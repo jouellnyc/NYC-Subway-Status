@@ -64,7 +64,6 @@ Also see https://github.com/Xinyuan-LilyGO/T-Display-S3?tab=readme-ov-file
 
 ## Key Technical Specifications
 
-- **Baud Rate**: 9600 bps (configurable)
 - **Protocol**: PPP over UART
 - **Max Distance**: 1200m (4000ft) via RS-422
 - **Power**: 3.3V logic levels
