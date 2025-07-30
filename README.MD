@@ -2,15 +2,15 @@
 
 > A modular, memory-optimized semi-real-time NYC Subway monitor.
 
-## TL;DR 
-- Esp32 and Pi Picos cannot access WPA-Enterprise wifi. 
-- A ppp over serial connection to a pizero allow them to.
-- Let's make an NYC Subway Desk Monitor.
-
 [![Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![Language](https://img.shields.io/badge/Language-MicroPython-green.svg)](https://micropython.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+## TL;DR 
+- Esp32 and Pi Picos cannot access WPA-Enterprise wifi. 
+- A ppp over serial connection to a pizero allow them to.
+- Let's make an NYC Subway Desk Monitor.
 
 ## Pics 
 | Image | Image |
