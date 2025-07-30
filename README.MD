@@ -40,6 +40,8 @@ ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
 | **3.3V** | Power Supply | Logic level power | → RS-422 VCC |
 | **GPIO0** | Button Input | Line switch control | Momentary button press |
 
+Also see https://github.com/Xinyuan-LilyGO/T-Display-S3?tab=readme-ov-file
+
 
 ## Pi Zero  GPIO Configuration
 
