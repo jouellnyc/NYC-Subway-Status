@@ -1,4 +1,4 @@
-# 🚇 MicroPython Transit Monitor
+# 🚇 MicroPython NYC Subway Desk Monitor
 
 > A modular, memory-optimized semi-real-time NYC Subway monitor.
 
