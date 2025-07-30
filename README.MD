@@ -76,6 +76,7 @@ ampy -p /dev/ttyUSB0 put transit_client.py
 ampy -p /dev/ttyUSB0 put hardware_manager.py
 ampy -p /dev/ttyUSB0 put utils.py
 ampy -p /dev/ttyUSB0 put smain.py
+ampy -p /dev/ttyUSB0 put main.py
 ```
 
 ### Step 4: Configure
