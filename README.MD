@@ -7,12 +7,10 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-| Image |
-|-------|
-| ![ESP32 T-Display-S3 P4](pics/p4.png) |
-| ![ESP32 T-Display-S3 P3](pics/p3.png) |
-| ![ESP32 T-Display-S3 P2](pics/p2.png) |
-| ![ESP32 T-Display-S3 P1](pics/p1.png) |
+| Image | Image |
+|-------|-------|
+| <img src="pics/p1.png" width="50%"> | <img src="pics/p2.png" width="50%"> |
+| <img src="pics/p3.png" width="50%"> | <img src="pics/p4.png" width="50%"> |
 
 ## TL;DR 
 - Esp32 and Pi Picos cannot access WPA-Enterprise wifi. 
