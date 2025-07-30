@@ -1,6 +1,6 @@
 # 🚇 MicroPython Transit Monitor
 
-> A modular, memory-optimized real-time transit monitoring system for ESP32 with TFT display and cellular connectivity.
+> A modular, memory-optimized semi-real-time NYC Subway monitor.
 
 [![Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![Language](https://img.shields.io/badge/Language-MicroPython-green.svg)](https://micropython.org/)
@@ -15,7 +15,7 @@ The system cycles through configured transit lines (F and R trains by default), 
 - ✅ Real-time service status
 - 🚨 Service alerts and planned work  
 - ⏰ Delays and service changes
-- 🔄 Automatic line switching with manual override
+- 🔄 Automatic line switching with manual override (If using T-Display-S3)
 
 ## ✨ Features
 
@@ -23,7 +23,7 @@ The system cycles through configured transit lines (F and R trains by default), 
 |---------|-------------|
 | 🚊 **Real-time Transit Data** | Fetches live subway status from transit API |
 | 📺 **TFT Display** | Scrolling text display with line-specific colors |
-| 📱 **Cellular Connectivity** | PPP connection for internet access |
+| 📱 **IP Connectivity** | PPP connection for internet access bypassing WPA Enterprise limitations|
 | 💾 **Memory Optimized** | Lazy loading and garbage collection for stable operation |
 | 🎛️ **Hardware Controls** | Button interrupts for line switching |
 | ⚡ **Caching** | Smart caching reduces API calls and improves responsiveness |
