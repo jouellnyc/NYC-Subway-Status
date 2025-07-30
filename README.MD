@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-[![T-Display](/pics/t-display.png)](T-Display)
+[![T-Display](t-display.png)](T-Display)
 
 Originally designed for NYC MTA subway lines but adaptable to any transit API.
 
