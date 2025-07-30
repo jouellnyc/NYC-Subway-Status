@@ -7,46 +7,6 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-```
-T-Display-S3 ESP32 to Pi Zero Connection with RS-422 and WPA Enterprise Network
-================================================================================
-
-                    WPA Enterprise Network
-                           ┌─────────┐
-                           │ WiFi AP │
-                           │802.1X   │
-                           │Enterprise│
-                           └────┬────┘
-                                │ WiFi
-                         ┌────▼▼▼▼▼▼▼────┐
-                         │ Raspberry Pi   │
-                         │ Zero 2W        │
-                         │                │
-                         │ ┌────────────┐ │
-                         │ │   GPIO     │ │
-                         │ │   Header   │ │
-                         │ │            │ │
-                         │ │ TX  ○ ○ RX │ │
-                         │ │ A+  ○ ○ A- │ │
-                         │ │ GND ○ ○VCC │ │
-                         │ └────────────┘ │
-                         └────────────────┘
-                                |
-                               PPP/Serial
-                                |
-                         ╔══════▼══════╗
-                         ║             ║
-                         ║ T-Display-  ║
-                         ║ S3 ESP32    ║
-                         ║             ║
-                         ║ ┌─────────┐ ║
-                         ║ │ 1.9"    │ ║
-                         ║ │ LCD     │ ║
-                         ║ │ Display │ ║
-                         ║ └─────────┘ ║
-                         ===============
-```
-
 Connection Details:
 ==================
 
