@@ -10,10 +10,10 @@
 ```markdown
 | Image | Description |
 |-------|-------------|
-| ![ESP32 T-Display-S3 P1](p1.png) | **ESP32 T-Display-S3**|
-| ![ESP32 T-Display-S3 P2](p2.png) | **ESP32 T-Display-S3**|
-| ![ESP32 T-Display-S3 P3](p3.png) | **ESP32 T-Display-S3**|
-| ![ESP32 T-Display-S3 P4](p4.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P1](pics/p1.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P2](pics/p2.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P3](pics/p3.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P4](pices/p4.png)| **ESP32 T-Display-S3**|
 ```
 
 [![T-Display](t-display.png)](T-Display)
