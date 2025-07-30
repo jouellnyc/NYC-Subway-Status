@@ -7,6 +7,15 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+```markdown
+| Image | Description |
+|-------|-------------|
+| ![ESP32 T-Display-S3 P1](p1.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P2](p2.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P3](p3.png) | **ESP32 T-Display-S3**|
+| ![ESP32 T-Display-S3 P4](p4.png) | **ESP32 T-Display-S3**|
+```
+
 [![T-Display](t-display.png)](T-Display)
 
 ## TL;DR 
