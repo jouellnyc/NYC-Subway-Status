@@ -10,7 +10,9 @@
 [![T-Display](t-display.png)](T-Display)
 
 ## TL;DR 
-- Esp32 and Pi Picos cannot access WPA-Enterprise wifi. A ppp over serail connection to a pizero allow them to.
+- Esp32 and Pi Picos cannot access WPA-Enterprise wifi. 
+- A ppp over serail connection to a pizero allow them to.
+- Let's make an NYC Subway Desk Monitor.
 
 ## 📸 Basic Operation 
 
