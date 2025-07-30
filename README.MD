@@ -9,14 +9,15 @@
 
 [![T-Display](t-display.png)](T-Display)
 
-Originally designed for NYC MTA subway lines but adaptable to any transit API.
+## TL;DR 
+- Esp32 and Pi Picos cannot access WPA-Enterprise wifi. A ppp over serail connection to a pizero allow them to.
 
-## 📸 Demo
+## 📸 Basic Operation 
 
 The system cycles through configured transit lines (F and R trains by default), displaying:
 - ✅ Real-time service status
-- 🚨 Service alerts and planned work  
-- ⏰ Delays and service changes
+- 🚨 Service alerts
+- ⏰ Delays and service changes (No future service changes)
 - 🔄 Automatic line switching with manual override (If using T-Display-S3)
 
 ## ✨ Features
