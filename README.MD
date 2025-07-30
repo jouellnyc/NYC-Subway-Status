@@ -89,8 +89,8 @@ ampy -p /dev/ttyUSB0 put main.py
 Edit `config.py` to match your setup:
 
 ```python
-# Transit API endpoint (Here we use a Pi Zero)
-SERVICE_URL = "http://your-transit-api:5000"
+# Transit API endpoint (Here we use a Pi Zero running flask_nyc_mta.py)
+SERVICE_URL = "http://your-pi-zero:5000"
 
 # Hardware pins
 PINS = {
