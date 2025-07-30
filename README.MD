@@ -14,6 +14,17 @@
 - A ppp over serial connection to a pizero allow them to.
 - Let's make an NYC Subway Desk Monitor.
 
+## Serial Communication Chain
+
+```
+ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
+     │                 │                  │
+   9600 baud      Differential         9600 baud
+  (GPIO44/43)     Signal (A+/A-)      (GPIO14/15)
+     PPP            Up to 1200m        PPP Server
+   Protocol        Industrial Grade    & Router
+```
+
 # Serial Connections & GPIO Pin Summary
 
 ## ESP32 T-Display-S3 GPIO Configuration
@@ -36,17 +47,6 @@
 | **Pin 1 (3.3V)** | Power Supply | Logic level power | → RS-422 VCC |
 | **Pin 6 (GND)** | Ground | Common reference | → RS-422 & ESP32 GND |
 
-## Serial Communication Chain
-
-```
-ESP32 UART1 ←→ RS-422 Transceiver ←→ Pi Zero UART
-     │                 │                    │
-   9600 baud      Differential         9600 baud
-  (GPIO44/43)     Signal (A+/A-)      (GPIO14/15)
-     PPP            Up to 1200m          PPP Server
-   Protocol        Industrial Grade      & Router
-```
-
 
 ## Communication Protocol Stack
 
@@ -66,23 +66,8 @@ ESP32 UART1 ←→ RS-422 Transceiver ←→ Pi Zero UART
 - **Noise Immunity**: Differential signaling
 - **Auto-Recovery**: PPP reconnect on failure
 
-## Wiring Summary
-
-**6 jumper cables required:**
-1. ESP32 GPIO44 → RS-422 TX
-2. ESP32 GPIO43 → RS-422 RX  
-3. ESP32 GPIO18 → RS-422 A+
-4. ESP32 GPIO19 → RS-422 A-
-5. ESP32 GND → RS-422 GND
-6. ESP32 3.3V → RS-422 VCC
-
-**4 additional cables for Pi Zero:**
-1. RS-422 B+ → Pi GPIO14
-2. RS-422 B- → Pi GPIO15
-3. RS-422 GND → Pi Pin 6
-4. RS-422 VCC → Pi Pin 1
-
 This creates a robust, industrial-grade serial communication link that bypasses WiFi complexity while providing reliable long-distance connectivity.
+
 ## 📸 Basic Operation 
 
 The system cycles through configured transit lines (F and R trains by default), displaying:
