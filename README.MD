@@ -350,6 +350,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🐍 [MicroPython community](https://micropython.org/) for the excellent embedded Python implementation
 - 🚇 [NYC MTA](https://www.mta.info/) for providing transit data APIs
 - 🔧 ESP32 community for hardware support and libraries
+-    Russ Hughes - for the T-Display firmware -  https://github.com/russhughes/st7789s3_mpy/blob/main/firmware/firmware.bin
+
 
 ## 📞 Support
 
