@@ -15,8 +15,8 @@
 ## Pics 
 | Image | Image |
 |-------|-------|
-| <img src="pics/p1.png" width="50%"> | <img src="pics/p2.png" width="50%"> |
-| <img src="pics/p3.png" width="50%"> | <img src="pics/p4.png" width="50%"> |
+| <img src="pics/p4.png" width="50%"> | <img src="pics/p3.png" width="50%"> |
+| <img src="pics/p2.png" width="50%"> | <img src="pics/p1.png" width="50%"> |
 
 
 
