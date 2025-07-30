@@ -37,6 +37,7 @@ The system cycles through configured transit lines (F and R trains by default), 
 ## 🛠 Hardware Requirements
 
 ### Components
+- **PiZero** development board
 - **ESP32** development board
 - **TFT Display** (configured for s3lcd library)
 - **UART** acts as modem (uses PPP support)
