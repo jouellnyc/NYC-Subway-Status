@@ -34,9 +34,8 @@ The system cycles through configured transit lines (F and R trains by default), 
 ### Components
 - **ESP32** development board
 - **TFT Display** (configured for s3lcd library)
-- **Cellular Modem** with PPP support
+- **UART** acts as modem (uses PPP support)
 - **Push Button** for line switching
-- **Status LED**
 
 ### Pin Configuration
 ```python
