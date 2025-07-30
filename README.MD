@@ -7,6 +7,8 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+[![T-Display](t-display.png)](T-Display)
+
 Originally designed for NYC MTA subway lines but adaptable to any transit API.
 
 ## 📸 Demo
@@ -25,11 +27,11 @@ The system cycles through configured transit lines (F and R trains by default), 
 | 📺 **TFT Display** | Scrolling text display with line-specific colors |
 | 📱 **IP Connectivity** | PPP connection for internet access bypassing WPA Enterprise limitations|
 | 💾 **Memory Optimized** | Lazy loading and garbage collection for stable operation |
-| 🎛️ **Hardware Controls** | Button interrupts for line switching |
+| 🎛 **Hardware Controls** | Button interrupts for line switching |
 | ⚡ **Caching** | Smart caching reduces API calls and improves responsiveness |
-| 🏗️ **Modular Design** | Clean separation of concerns across modules |
+| 🏗 **Modular Design** | Clean separation of concerns across modules |
 
-## 🛠️ Hardware Requirements
+## 🛠 Hardware Requirements
 
 ### Components
 - **ESP32** development board
@@ -108,16 +110,16 @@ import smain
 ```
 ├── 📄 main.py              # Default Main file 
 ├── 📄 smain.py             # Main application orchestrator
-├── ⚙️ config.py             # Configuration constants
+├── ⚙ config.py             # Configuration constants
 ├── 📺 display_manager.py   # TFT display operations
 ├── 📡 ppp_manager.py       # Cellular connectivity
 ├── 🚊 transit_client.py    # API client with caching
-├── 🎛️ hardware_manager.py  # Button/LED control
+├── 🎛 hardware_manager.py  # Button/LED control
 ├── 🔧 utils.py             # Utility functions
 └── 📋 README.md            # This file
 ```
 
-## ⚙️ Configuration
+## ⚙ Configuration
 
 <details>
 <summary><b>🚊 Transit Lines Configuration</b></summary>
@@ -137,7 +139,7 @@ SUBWAY_LINE_COLORS = {
 </details>
 
 <details>
-<summary><b>⏱️ Timing Settings</b></summary>
+<summary><b>⏱ Timing Settings</b></summary>
 
 ```python
 TIMING = {
@@ -164,7 +166,7 @@ MEMORY_CONFIG = {
 
 ### Normal Operation
 - 🔄 System automatically cycles through configured transit lines
-- ⏱️ Each line displays for 10 seconds (configurable)
+- ⏱ Each line displays for 10 seconds (configurable)
 - 📊 Real-time status updates with color-coded information
 
 ### Manual Control
@@ -250,13 +252,13 @@ The system expects a REST API with these endpoints:
 - **Header Protection**: Headers remain visible during content updates
 - **Word Wrapping**: Automatic text wrapping for long messages
 
-## 🛡️ Error Handling
+## 🛡 Error Handling
 
 | Error Type | Handling Strategy |
 |------------|------------------|
 | 🌐 **Network Failures** | Automatic PPP reconnection with exponential backoff |
 | 🚊 **API Errors** | Graceful fallback to cached data |
-| 🎛️ **Hardware Issues** | Soft failures with console fallback |
+| 🎛 **Hardware Issues** | Soft failures with console fallback |
 | 💾 **Memory Exhaustion** | Automatic garbage collection and cache cleanup |
 
 ## 🔍 Debugging
@@ -354,7 +356,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Having issues? We're here to help!
 
 1. 📋 Check the console output for error messages
-2. ⚙️ Verify your `config.py` settings match your hardware
+2. ⚙ Verify your `config.py` settings match your hardware
 3. 🧪 Test individual modules using the provided test functions
 4. 🐛 [Open an issue](../../issues) with detailed error logs and configuration
 
@@ -362,7 +364,7 @@ Having issues? We're here to help!
 
 <div align="center">
 
-**Built with ❤️ for real-time transit information**
+**Built with ❤ for real-time transit information**
 
 [⭐ Star this repo](../../stargazers) • [🐛 Report Bug](../../issues) • [💡 Request Feature](../../issues)
 
