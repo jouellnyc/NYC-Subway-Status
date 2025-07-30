@@ -56,11 +56,12 @@ PPP_CONFIG = {
 
 ### Step 1: Flash MicroPython
 Flash MicroPython firmware to your ESP32 device.
+https://github.com/russhughes/st7789s3_mpy/blob/main/firmware/firmware.bin
 
 ### Step 2: Install Libraries
 ```bash
 # Install s3lcd for TFT display support
-# Install any additional MicroPython libraries your hardware requires
+# (Use Russ's FW above)
 ```
 
 ### Step 3: Upload Code
@@ -81,7 +82,7 @@ ampy -p /dev/ttyUSB0 put smain.py
 Edit `config.py` to match your setup:
 
 ```python
-# Transit API endpoint
+# Transit API endpoint (Here's we use a Pi Zero)
 SERVICE_URL = "http://your-transit-api:5000"
 
 # Hardware pins
