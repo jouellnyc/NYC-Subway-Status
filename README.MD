@@ -106,12 +106,13 @@ import smain
 ## 📁 Project Structure
 
 ```
-├── 📄 smain.py              # Main application orchestrator
+├── 📄 main.py              # Default Main file 
+├── 📄 smain.py             # Main application orchestrator
 ├── ⚙️ config.py             # Configuration constants
-├── 📺 display_manager.py    # TFT display operations
-├── 📡 ppp_manager.py        # Cellular connectivity
-├── 🚊 transit_client.py     # API client with caching
-├── 🎛️ hardware_manager.py   # Button/LED control
+├── 📺 display_manager.py   # TFT display operations
+├── 📡 ppp_manager.py       # Cellular connectivity
+├── 🚊 transit_client.py    # API client with caching
+├── 🎛️ hardware_manager.py  # Button/LED control
 ├── 🔧 utils.py             # Utility functions
 └── 📋 README.md            # This file
 ```
