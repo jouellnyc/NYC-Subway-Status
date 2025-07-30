@@ -7,6 +7,77 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+```
+T-Display-S3 ESP32 to Pi Zero Connection with RS-422 and WPA Enterprise Network
+================================================================================
+
+                    WPA Enterprise Network
+                           ┌─────────┐
+                           │ WiFi AP │
+                           │802.1X   │
+                           │Enterprise│
+                           └────┬────┘
+                                │ WiFi
+                         ┌────▼▼▼▼▼▼▼────┐
+                         │ Raspberry Pi   │
+                         │ Zero 2W        │
+                         │                │
+                         │ ┌────────────┐ │
+                         │ │   GPIO     │ │
+                         │ │   Header   │ │
+                         │ │            │ │
+                         │ │ TX  ○ ○ RX │ │
+                         │ │ A+  ○ ○ A- │ │
+                         │ │ GND ○ ○VCC │ │
+                         │ └────────────┘ │
+                         └────────────────┘
+                                |
+                               PPP/Serial
+                                |
+                         ╔══════▼══════╗
+                         ║             ║
+                         ║ T-Display-  ║
+                         ║ S3 ESP32    ║
+                         ║             ║
+                         ║ ┌─────────┐ ║
+                         ║ │ 1.9"    │ ║
+                         ║ │ LCD     │ ║
+                         ║ │ Display │ ║
+                         ║ └─────────┘ ║
+                         ===============
+```
+
+Connection Details:
+==================
+
+ESP32 T-Display-S3 → RS-422 Transceiver:
+├─ GPIO44 (TX) ────→ (TXD)
+├─ GPIO43 (RX) ────→ (RXD)
+├─ GND ────────────→ Ground
+└─ 3.3V ───────────→ VCC
+
+RS-422 Transceiver → Pi Zero:
+├─ TXD ──→ GPIO14 (TXD)
+├─ RXD ──→ GPIO15 (RXD)
+├─ Ground ──────────→ Pin 6 (GND)
+└─ VCC ─────────────→ Pin 1 (3.3V)
+
+Network Configuration:
+=====================
+┌─ Pi Zero connects to WPA Enterprise WiFi
+├─ Uses 802.1X authentication (EAP-PEAP/EAP-TLS)
+├─ Requires username/password 
+└─ Pi Zero shares network via PPP/Serial Connection (RS-422 is optional - can be any Serial method)
+
+
+Notes:
+======
+• RS-422 provides differential signaling for noise immunity
+• Max cable length: ~1200m (4000ft) at 100kbps
+• T-Display-S3 has built-in 1.9" LCD for status display
+• Pi Zero 2W recommended for better performance
+• Both devices can operate at 3.3V logic levels
+
 Originally designed for NYC MTA subway lines but adaptable to any transit API.
 
 ## 📸 Demo
