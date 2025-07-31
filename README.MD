@@ -136,9 +136,9 @@ python flask_nyc_mta.py
 
 
 ### Step 1b: Configure ppp on Pizero
+sudo apt install ppp
 
-See [wpa-ent-mschapv2-bridge](https://github.com/jouellnyc/wpa-ent-mschapv2-bridge)
-See [UART ESP32 Pi Zero PPPoE](https://github.com/jouellnyc/UART/tree/main/esp32_pizero_pppo)
+See [wpa-ent-mschapv2-bridge](https://github.com/jouellnyc/wpa-ent-mschapv2-bridge) and [UART ESP32 Pi Zero PPPoE](https://github.com/jouellnyc/UART/tree/main/esp32_pizero_pppo)
 
 ```
 then 
