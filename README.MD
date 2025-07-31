@@ -28,7 +28,9 @@ ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
    PPP Client            Up to 1200m             PPP Server & Router 
 ```
 
-Note that you can use any serial communication standard. I chose an RS-422.
+Notes: 
+- You can use any serial communication standard. I chose an RS-422.
+- I use a ESP32 T-Display-S3 here, but any esp32 with an oled can work similarly (if you update the display driver).
 
 For more examples, see https://github.com/jouellnyc/UART.
 
