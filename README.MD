@@ -21,6 +21,7 @@
 
 
 ## Serial Communication Chain
+You can use any serial communication standard. I chose an RS-422.
 
 ```
 ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
