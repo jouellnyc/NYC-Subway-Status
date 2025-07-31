@@ -140,7 +140,7 @@ See https://github.com/jouellnyc/wpa-ent-mschapv2-bridge
 See https://github.com/jouellnyc/UART/tree/main/esp32_pizero_ppp
 ```
 
-### Step 1: Flash MicroPython on the ESP32/T-Display
+### Step 2: Flash MicroPython on the ESP32/T-Display
 Flash MicroPython firmware to your ESP32 device.
 https://github.com/russhughes/st7789s3_mpy/blob/main/firmware/firmware.bin
 
