@@ -30,8 +30,7 @@ ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
 ```
 | RS-422t | Notes |
 |---------|---------|
-| <p align="center"><img src="pics/rs-422.png" width="35%" align="center"></p> | 
-  **Any serial communication standard will work. I chose RS-422.<br> Any ESP32 / oled will work (if you add support for the display). I chose a T-Display-S3 here. |
+| <p align="center"><img src="pics/rs-422.png" width="35%" align="center"></p> | **Any serial communication standard will work. I chose RS-422.<br> Any ESP32 / oled will work (if you add support for the display). I chose a T-Display-S3 here. |
 
 
 Notes: 
