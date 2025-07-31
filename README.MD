@@ -18,9 +18,6 @@
 | <img src="pics/p4.png" width="50%"> | <img src="pics/p3.png" width="50%"> |
 | <img src="pics/p2.png" width="50%"> | <img src="pics/p1.png" width="50%"> |
 
-|-|-|
-|-|-|
-|<img src="pics/rs-422.png" width="35%" align="center">|
 
 
 
@@ -31,6 +28,8 @@ ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
      │                                                  │
    PPP Client            Up to 1200m             PPP Server & Router 
 ```
+
+<img src="pics/rs-422.png" width="35%" align="center">|
 
 Notes: 
 - Any serial communication standard will work. <P>
