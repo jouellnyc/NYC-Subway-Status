@@ -22,6 +22,7 @@
 
 ## Serial Communication Chain
 You can use any serial communication standard. I chose an RS-422.
+
 For more examples, see https://github.com/jouellnyc/UART.
 
 ```
