@@ -9,7 +9,7 @@
 
 ## TL;DR 
 - Esp32 and Pi Picos cannot access WPA-Enterprise wifi. 
-- A ppp over serial connection to a pizero allow them to.
+- A ppp over serial connection to a pi zero allow them to.
 - Let's make an NYC Subway Desk Monitor.
 
 ## Pics 
