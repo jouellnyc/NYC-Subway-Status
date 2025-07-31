@@ -135,9 +135,19 @@ python flask_nyc_mta.py
 
 
 ### Step 1b: Configure ppp on Pizero
-then 
 See https://github.com/jouellnyc/wpa-ent-mschapv2-bridge
-See https://github.com/jouellnyc/UART/tree/main/esp32_pizero_ppp
+See https://github.com/jouellnyc/UART/tree/main/esp32_pizero_pppo
+
+```
+then 
+
+vi  /etc/ppp/options 
+
+#set to your desired DNS 
+ ms-dns 192.168.X.Y
+ ms-dns 8.8.8.8
+
+
 ```
 
 ### Step 2: Flash MicroPython on the ESP32/T-Display
