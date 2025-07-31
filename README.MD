@@ -21,15 +21,16 @@
 
 
 ## Serial Communication Chain
-You can use any serial communication standard. I chose an RS-422.
-
-For more examples, see https://github.com/jouellnyc/UART.
 
 ```
 ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
      │                                                  │
    PPP Client            Up to 1200m             PPP Server & Router 
 ```
+
+Note that you can use any serial communication standard. I chose an RS-422.
+
+For more examples, see https://github.com/jouellnyc/UART.
 
 # Serial Connections & GPIO Pin Summary
 
