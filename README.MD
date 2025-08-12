@@ -138,7 +138,7 @@ python flask_nyc_mta.py
 sudo apt install ppp
 ```
 
-See [wpa-ent-mschapv2-bridge](https://github.com/jouellnyc/wpa-ent-mschapv2-bridge) and [UART ESP32 Pi Zero PPPoE](https://github.com/jouellnyc/UART/tree/main/esp32_pizero_pppo)
+See [wpa-ent-mschapv2-bridge](https://github.com/jouellnyc/wpa-ent-mschapv2-bridge) and [UART ESP32 Pi Zero PPP](https://github.com/jouellnyc/UART/tree/main/esp32_pizero_ppp)
 
 ```
 then 
