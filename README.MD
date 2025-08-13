@@ -34,7 +34,7 @@ ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
 |---------|---------|
 | <p align="center"><img src="pics/rs-422.png" width="35%" align="center"></p> | - Any serial communication standard will work. I chose RS-422.<br> - Any ESP32 / oled will work (if you add support for the display). I chose a T-Display-S3 here. |
 
-For more UART / examples, see https://github.com/jouellnyc/UART.
+For more UART examples, see https://github.com/jouellnyc/UART.
 
 # Serial Connections & GPIO Pin Summary
 
