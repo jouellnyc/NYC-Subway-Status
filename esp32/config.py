@@ -2,7 +2,7 @@
 # Centralized configuration for MicroPython Transit Monitor
 
 # Service Configuration
-SERVICE_URL = "http://192.168.0.23:5000"
+SERVICE_URL = "http://10.0.5.1:5000"
 
 # PPP Configuration
 PPP_CONFIG = {
