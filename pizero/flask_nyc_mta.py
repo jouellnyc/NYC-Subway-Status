@@ -1,8 +1,8 @@
-
 #!/usr/bin/env python3
 """
 Lightweight web service for serving transit data to MicroPython clients
 Features caching to prevent client timeouts when data fetching is slow
+Now uses MTA GTFS-RT feeds directly (no API key required)
 """
 
 from flask import Flask, jsonify, request
@@ -11,13 +11,26 @@ import threading
 import time
 import logging
 import os
+import requests
 from datetime import datetime, timedelta
 from werkzeug.serving import WSGIRequestHandler
-
-from mta_pb2 import MTATrainChecker
-checker = MTATrainChecker()
+from google.transit import gtfs_realtime_pb2
 
 app = Flask(__name__)
+
+# MTA Feed URLs - publicly accessible, no API key needed
+MTA_FEEDS = {
+    'F': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-bdfm',  # F train is in BDFM feed
+    'R': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-nqrw',  # R train is in NQRW feed
+    'ACE': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace',
+    'BDFM': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-bdfm',
+    'G': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-g',
+    'JZ': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-jz',
+    'NQRW': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-nqrw',
+    'L': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-l',
+    '123456S': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs',
+    '7': 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-7'
+}
 
 # Cache configuration
 CACHE_DURATION = 600  # Cache data for 600 seconds (10 minutes)
@@ -90,14 +103,144 @@ def setup_logging():
 # Set up logging
 logger = setup_logging()
 
+def get_mta_data(feed_url):
+    """Fetch and parse MTA GTFS-RT data - no API key required!"""
+    try:
+        response = requests.get(feed_url, timeout=30)
+        
+        if response.status_code == 200:
+            # Parse the protobuf data
+            feed = gtfs_realtime_pb2.FeedMessage()
+            feed.ParseFromString(response.content)
+            return feed
+        else:
+            logger.error(f"Error fetching data from {feed_url}: {response.status_code}")
+            return None
+    except Exception as e:
+        logger.error(f"Error fetching MTA data: {e}")
+        return None
+
+def parse_service_alerts(feed):
+    """Parse service alerts from GTFS-RT feed"""
+    alerts = []
+    
+    if not feed:
+        return alerts
+    
+    for entity in feed.entity:
+        if entity.HasField('alert'):
+            alert = entity.alert
+            
+            # Extract alert information
+            alert_info = {
+                'id': entity.id,
+                'header': '',
+                'description': '',
+                'route_ids': [],
+                'active_period': []
+            }
+            
+            # Get header text
+            if alert.HasField('header_text'):
+                for translation in alert.header_text.translation:
+                    if translation.language == 'en' or not translation.language:
+                        alert_info['header'] = translation.text
+                        break
+            
+            # Get description text
+            if alert.HasField('description_text'):
+                for translation in alert.description_text.translation:
+                    if translation.language == 'en' or not translation.language:
+                        alert_info['description'] = translation.text
+                        break
+            
+            # Get affected routes
+            for informed_entity in alert.informed_entity:
+                if informed_entity.HasField('route_id'):
+                    alert_info['route_ids'].append(informed_entity.route_id)
+            
+            # Get active periods
+            for period in alert.active_period:
+                period_info = {}
+                if period.HasField('start'):
+                    period_info['start'] = datetime.fromtimestamp(period.start)
+                if period.HasField('end'):
+                    period_info['end'] = datetime.fromtimestamp(period.end)
+                alert_info['active_period'].append(period_info)
+            
+            alerts.append(alert_info)
+    
+    return alerts
+
+def get_trip_updates_count(feed):
+    """Count active trip updates as a proxy for active trips"""
+    if not feed:
+        return 0
+    
+    count = 0
+    for entity in feed.entity:
+        if entity.HasField('trip_update'):
+            count += 1
+    
+    return count
+
 def fetch_transit_data():
     """
-    Fetch fresh transit data - this can take 30+ seconds
+    Fetch fresh transit data from MTA GTFS-RT feeds
     """
     try:
-        logger.info("Fetching fresh transit data...")
-        raw_data = checker.get_service_status()
-
+        logger.info("Fetching fresh transit data from MTA feeds...")
+        
+        # Get data for F and R trains (our main focus)
+        f_feed = get_mta_data(MTA_FEEDS['F'])  # BDFM feed
+        r_feed = get_mta_data(MTA_FEEDS['R'])  # NQRW feed
+        
+        raw_data = {}
+        
+        # Process F train data
+        if f_feed:
+            f_alerts = parse_service_alerts(f_feed)
+            f_trips = get_trip_updates_count(f_feed)
+            
+            # Determine F train status based on alerts
+            f_status = "Good Service"
+            if any('delay' in (alert['header'] + alert['description']).lower() for alert in f_alerts):
+                f_status = "Delays"
+            elif any('construction' in (alert['header'] + alert['description']).lower() for alert in f_alerts):
+                f_status = "Planned Work"
+            elif f_alerts:
+                f_status = "Service Change"
+            
+            raw_data['F'] = {
+                'route': 'F',
+                'status': f_status,
+                'alerts': f_alerts,
+                'active_trips': f_trips
+            }
+            logger.info(f"F train: {f_status}, {len(f_alerts)} alerts, {f_trips} active trips")
+        
+        # Process R train data
+        if r_feed:
+            r_alerts = parse_service_alerts(r_feed)
+            r_trips = get_trip_updates_count(r_feed)
+            
+            # Determine R train status based on alerts
+            r_status = "Good Service"
+            if any('delay' in (alert['header'] + alert['description']).lower() for alert in r_alerts):
+                r_status = "Delays"
+            elif any('construction' in (alert['header'] + alert['description']).lower() for alert in r_alerts):
+                r_status = "Planned Work"
+            elif r_alerts:
+                r_status = "Service Change"
+            
+            raw_data['R'] = {
+                'route': 'R',
+                'status': r_status,
+                'alerts': r_alerts,
+                'active_trips': r_trips
+            }
+            logger.info(f"R train: {r_status}, {len(r_alerts)} alerts, {r_trips} active trips")
+        
         # Normalize the data to expected format
         normalized_data = normalize_mta_data(raw_data)
 
@@ -107,7 +250,7 @@ def fetch_transit_data():
             logger.info(f"Train: {normalized_data.get('train')}, Status: {normalized_data.get('status')}")
             return normalized_data
         else:
-            logger.warning("MTA checker returned no data")
+            logger.warning("MTA feeds returned no usable data")
             return None
 
     except Exception as e:
@@ -124,22 +267,13 @@ def update_cache():
         is_updating = True
 
     try:
-        logger.info("Fetching fresh transit data...")
-        raw_data = checker.get_service_status()
+        raw_data = fetch_transit_data()
 
         if raw_data:
-            # Create the merged/normalized version for backward compatibility
-            normalized_data = normalize_mta_data(raw_data)
-
-            if normalized_data:
-                # Store raw data inside the normalized data dictionary
-                normalized_data['__raw_data__'] = raw_data
-
-                with cache_lock:
-                    cached_data = normalized_data
-                    cache_timestamp = datetime.now()
-                    logger.info("Cache updated successfully")
-                    logger.info(f"Raw data keys: {list(raw_data.keys()) if raw_data else 'None'}")
+            with cache_lock:
+                cached_data = raw_data
+                cache_timestamp = datetime.now()
+                logger.info("Cache updated successfully")
         else:
             logger.warning("Failed to fetch fresh data, keeping old cache")
     finally:
@@ -157,9 +291,9 @@ def background_updater():
             time.sleep(10)  # Wait 10 seconds before retrying
 
 def normalize_mta_data(raw_data):
-    """Normalize MTA checker data to expected format"""
+    """Normalize MTA GTFS-RT data to expected format"""
     if not raw_data:
-        logger.warning("MTA checker returned None/empty data")
+        logger.warning("MTA feeds returned None/empty data")
         return None
 
     # Debug: Print the entire raw data structure
@@ -176,7 +310,8 @@ def normalize_mta_data(raw_data):
         "last_updated": datetime.now().isoformat(),
         "planned_work": [],
         "service_changes": [],
-        "delays": []
+        "delays": [],
+        "__raw_data__": raw_data  # Store raw data for individual line access
     }
 
     # Handle the nested structure where data is organized by train line
@@ -184,13 +319,15 @@ def normalize_mta_data(raw_data):
         train_lines = []
         all_alerts = []
         worst_status = "Good Service"
+        total_trips = 0
 
-        # Process each train line (R, F, etc.)
+        # Process each train line (F, R, etc.)
         for line_key, line_data in raw_data.items():
             if isinstance(line_data, dict):
                 logger.info(f"Processing line {line_key}: {line_data.get('route', 'Unknown')} - {line_data.get('status', 'Unknown')}")
 
                 train_lines.append(line_key)
+                total_trips += line_data.get('active_trips', 0)
 
                 # Get status for this line
                 line_status = line_data.get('status', 'Good Service')
@@ -203,24 +340,34 @@ def normalize_mta_data(raw_data):
 
                 for alert in alerts:
                     if isinstance(alert, dict):
-                        alert_text = alert.get('alert_text', alert.get('description', alert.get('summary', str(alert))))
+                        # Combine header and description for alert text
+                        alert_text = alert.get('header', '')
+                        if alert.get('description'):
+                            if alert_text:
+                                alert_text += ' - ' + alert.get('description')
+                            else:
+                                alert_text = alert.get('description')
+                        
+                        if not alert_text:
+                            alert_text = str(alert)
+                        
                         alert_id = alert.get('id', '')
 
-                        # Categorize alerts based on ID or content
-                        if 'planned_work' in alert_id or 'construction' in alert_text.lower():
+                        # Categorize alerts based on content
+                        alert_lower = alert_text.lower()
+                        if 'construction' in alert_lower or 'planned work' in alert_lower:
                             normalized["planned_work"].append(f"[{line_key}] {alert_text}")
-                        elif 'delay' in alert_id or 'delay' in alert_text.lower():
+                        elif 'delay' in alert_lower:
                             normalized["delays"].append(f"[{line_key}] {alert_text}")
                         else:
                             normalized["service_changes"].append(f"[{line_key}] {alert_text}")
 
                         logger.info(f"Alert: {alert_text[:100]}...")
-                    else:
-                        normalized["service_changes"].append(f"[{line_key}] {str(alert)}")
 
         # Set combined train name and status
         normalized["train"] = "/".join(train_lines) + " TRAINS" if train_lines else "TRAINS"
         normalized["status"] = worst_status
+        normalized["active_trips"] = total_trips
 
         # Set status type based on status
         if "delay" in worst_status.lower():
@@ -266,6 +413,12 @@ def normalize_single_line_data(line_key, line_data):
                             if start_time <= now <= end_time:
                                 is_currently_active = True
                                 break
+                        # If no end time, assume it's currently active
+                    elif start_time and not end_time:
+                        is_currently_active = True
+                    elif not start_time:
+                        # No start time, assume currently active
+                        is_currently_active = True
 
             if is_currently_active:
                 active_alerts.append(alert)
@@ -274,10 +427,9 @@ def normalize_single_line_data(line_key, line_data):
                 logger.debug(f"Line {line_key} - SKIPPING future alert: {alert.get('header', 'No header')[:100]}...")
 
     # Determine actual status based on active alerts
-    actual_status = "Good Service"
-    if active_alerts:
-        # If there are active alerts, use the original status
-        actual_status = line_data.get('status', 'Good Service')
+    actual_status = line_data.get('status', 'Good Service')
+    if not active_alerts:
+        actual_status = "Good Service"
 
     normalized = {
         "train": f"{line_key} TRAIN",
@@ -307,13 +459,22 @@ def normalize_single_line_data(line_key, line_data):
     # Process only the active alerts
     for alert in active_alerts:
         if isinstance(alert, dict):
-            alert_text = alert.get('alert_text', alert.get('description', alert.get('header', str(alert))))
-            alert_id = alert.get('id', '')
+            # Combine header and description
+            alert_text = alert.get('header', '')
+            if alert.get('description'):
+                if alert_text:
+                    alert_text += ' - ' + alert.get('description')
+                else:
+                    alert_text = alert.get('description')
+            
+            if not alert_text:
+                alert_text = str(alert)
 
             # Categorize alerts
-            if 'planned_work' in alert_id or 'construction' in alert_text.lower():
+            alert_lower = alert_text.lower()
+            if 'construction' in alert_lower or 'planned work' in alert_lower:
                 normalized["planned_work"].append(alert_text)
-            elif 'delay' in alert_id or 'delay' in alert_text.lower():
+            elif 'delay' in alert_lower:
                 normalized["delays"].append(alert_text)
             else:
                 normalized["service_changes"].append(alert_text)
@@ -438,16 +599,18 @@ def get_transit():
                 'X-Data-Source': data_source
             }
         elif format_type == 'compact':
-            # Compact JSON for MicroPython
+            # Compact JSON for MicroPython - remove __raw_data__ for compact format
+            compact_data = {k: v for k, v in data.items() if k != '__raw_data__'}
             return app.response_class(
-                response=json.dumps(data, separators=(',', ':')),
+                response=json.dumps(compact_data, separators=(',', ':')),
                 status=200,
                 mimetype='application/json',
                 headers={'X-Data-Source': data_source}
             )
         else:
-            # Standard JSON response
-            response = jsonify(data)
+            # Standard JSON response - remove __raw_data__ for regular API consumers
+            public_data = {k: v for k, v in data.items() if k != '__raw_data__'}
+            response = jsonify(public_data)
             response.headers['X-Data-Source'] = data_source
             return response
 
@@ -702,6 +865,7 @@ class QuietWSGIRequestHandler(WSGIRequestHandler):
 
 if __name__ == '__main__':
     print("TRANSIT SERVICE Starting...")
+    print("Now using MTA GTFS-RT feeds directly - no API key required!")
     print("Logging Configuration:")
     print("   Application logs: logs/transit_app.log")
     print("   Web request logs: logs/web_requests.log")
@@ -720,6 +884,7 @@ if __name__ == '__main__':
     print("   GET /cache/status     - Cache status info")
     print()
     print(f"Cache duration: {CACHE_DURATION}s, Update interval: {UPDATE_INTERVAL}s")
+    print("Fetching F train from BDFM feed, R train from NQRW feed")
     print()
 
     # Initialize cache with fallback data first
@@ -757,4 +922,3 @@ if __name__ == '__main__':
         use_reloader=False,  # Disable reloader to prevent duplicate background threads
         request_handler=QuietWSGIRequestHandler  # Use custom handler to suppress request logs
     )
-
