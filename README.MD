@@ -454,7 +454,8 @@ Having issues? We're here to help!
 1. 📋 Check the console output for error messages
 2. ⚙ Verify your `config.py` settings match your hardware
 3. 🧪 Test individual modules using the provided test functions
-4. 🐛 [Open an issue](../../issues) with detailed error logs and configuration
+4. Ensure both sides agree on the baud rate
+5. 🐛 [Open an issue](../../issues) with detailed error logs and configuration
 
 ---
 
