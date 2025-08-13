@@ -126,9 +126,10 @@ PPP_CONFIG = {
 
 ### Step 1a: Install Flask and Start up the App  on Pizero 
 ```
-pip install Flask
-pip instsll gtfs-realtime-bindings
-pip install protobuf
+pip install flask
+pip install requests
+pip install gtfs-realtime-bindings
+
 python flask_nyc_mta.py
 ```
 
