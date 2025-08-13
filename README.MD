@@ -117,7 +117,7 @@ PINS = {
 }
 
 PPP_CONFIG = {
-    'uart_id': 1,       # UART for cellular modem
+    'uart_id': 1,       # UART for ppp
     'tx_pin': 44,       # TX pin
     'rx_pin': 43,       # RX pin
     'baudrate': 9600
