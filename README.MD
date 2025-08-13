@@ -27,6 +27,8 @@
 ESP32 UART2 ←→ Serial Transceiver (RS-422 here)  ←→ Pi Zero UART
      │                                                  │
    PPP Client            Up to 1200m             PPP Server & Router 
+    10.0.5.2                                     10.0.5.1 / e.g 192.X.Y.Z    
+
 ```
 | RS-422 | Notes |
 |---------|---------|
